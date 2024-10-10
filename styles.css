@@ -1,0 +1,304 @@
+/* 定义全局变量 */
+:root {
+    --primary-color: #6c5ce7;
+    --secondary-color: #a29bfe;
+    --background-color: #f9f9f9;
+    --text-color: #2d3436;
+    --border-color: #dfe6e9;
+    --hover-color: #e6e9ef;
+    --result-color: #00b894;
+    --error-color: #d63031;
+}
+
+/* 重置基本样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 基本页面样式 */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* 容器样式 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 页头样式 */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 i {
+    margin-right: 0.5rem;
+}
+
+/* 主要内容布局 */
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+/* 计算器和结果区域的共同样式 */
+.calculator, .result {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+/* 结果区域特定样式 */
+.result {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+/* 悬停效果 */
+.calculator:hover, .result:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* 输入组样式 */
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem; /* 减小间距 */
+    margin-bottom: 1rem; /* 减小底部边距 */
+}
+
+/* 表单组样式 */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 1rem; /* 减小底部边距 */
+}
+
+/* 标签样式 */
+label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem; /* 减小底部边距 */
+    color: var(--text-color);
+}
+
+label i {
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+}
+
+/* 输入框和选择框样式 */
+input, select {
+    width: 100%;
+    padding: 0.6rem; /* 稍微减小内边距 */
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: var(--hover-color);
+    margin-bottom: 0.3rem; /* 减小底部边距 */
+}
+
+/* 添加鼠标指针样式 */
+input[type="text"]#expiryDate,
+input[type="text"]#transactionDate {
+    cursor: pointer;
+}
+
+/* 输入框和选择框焦点样式 */
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+}
+
+/* 更新时间样式 */
+.update-time {
+    font-size: 0.75rem; /* 稍微减小字体大小 */
+    color: #666;
+    position: absolute;
+    bottom: -1rem; /* 调整位置 */
+    left: 0;
+}
+
+/* 按钮样式 */
+button {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+}
+
+button i {
+    margin-right: 0.5rem;
+}
+
+/* 结果标题样式 */
+.result h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.result h2 i {
+    margin-right: 0.5rem;
+}
+
+/* 结果网格样式 */
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* 结果项样式 */
+.result-item {
+    background-color: var(--hover-color);
+    padding: 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.result-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 结果标签样式 */
+.result-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.result-label i {
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+}
+
+/* 结果值样式 */
+.result-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* 高亮结果项样式 */
+.highlight {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.highlight .result-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.highlight .result-label i {
+    color: white;
+}
+
+.highlight .result-value {
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* 链接样式 */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+a i {
+    margin-right: 0.3rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .result {
+        position: static;
+        margin-top: 2rem;
+    }
+
+    .input-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 通知样式 */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+.notification.success {
+    background-color: var(--result-color);
+}
+
+.notification.error {
+    background-color: var(--error-color);
+}

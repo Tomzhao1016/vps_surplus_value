@@ -302,3 +302,128 @@ a i {
 .notification.error {
     background-color: var(--error-color);
 }
+/* 移动端优化 */
+@media (max-width: 768px) {
+    /* 容器padding调整 */
+    .container {
+        padding: 1rem;
+    }
+    
+    /* 标题大小调整 */
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    /* 主要内容布局 */
+    main {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* 计算器和结果区域调整 */
+    .calculator, .result {
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+    
+    /* 输入组样式调整 */
+    .input-group {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    /* 表单元素大小调整 */
+    input, select {
+        padding: 0.8rem;
+        font-size: 16px; /* 防止iOS自动缩放 */
+        height: 45px; /* 确保触摸区域足够大 */
+    }
+    
+    /* 按钮样式调整 */
+    button {
+        padding: 0.8rem;
+        height: 45px;
+        margin-top: 0.5rem;
+    }
+    
+    /* 结果区域调整 */
+    .result {
+        margin-top: 1.5rem;
+    }
+    
+    .result h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* 结果网格调整为单列 */
+    .result-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /* 结果项样式调整 */
+    .result-item {
+        padding: 0.8rem;
+    }
+    
+    .result-label {
+        font-size: 0.85rem;
+    }
+    
+    .result-value {
+        font-size: 1.1rem;
+    }
+    
+    /* 高亮结果项调整 */
+    .highlight .result-value {
+        font-size: 1.3rem;
+    }
+}
+
+/* 增加触摸友好性的额外样式 */
+@media (max-width: 768px) {
+    /* 增加所有可点击元素的触摸区域 */
+    button, 
+    select, 
+    input[type="text"],
+    .result-item {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* 优化触摸反馈 */
+    button:active,
+    .result-item:active {
+        transform: scale(0.98);
+    }
+    
+    /* 调整通知位置和大小 */
+    .notification {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        text-align: center;
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+}
+
+/* 针对特小屏幕的额外优化 */
+@media (max-width: 320px) {
+    .container {
+        padding: 0.8rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .calculator, .result {
+        padding: 1rem;
+    }
+    
+    input, select, button {
+        font-size: 14px;
+    }
+}

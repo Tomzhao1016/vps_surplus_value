@@ -16,35 +16,33 @@
 
 ## 技术栈
 
-- 前端：HTML5, CSS3, JavaScript (ES6+)
-- 样式：自定义 CSS + Font Awesome 图标
-- 日期选择器：Flatpickr
-- 汇率 API：ExchangeRate-API
-- 后端：PHP
+- **前端**：HTML5, CSS3, JavaScript (ES6+)
+- **样式**：自定义 CSS + Font Awesome 图标
+- **日期选择器**：Flatpickr
+- **汇率 API**：ExchangeRate-API
 
 ## 快速开始
 
 1. 克隆仓库到本地：
-   ```
-   git clone https://github.com/your-username/remaining-value-calculator.git
-   ```
+
+    ```bash
+    git clone https://github.com/Tomzhao1016/vps_surplus_value.git
+    ```
 
 2. 进入项目目录：
-   ```
-   cd remaining-value-calculator
-   ```
+
+    ```bash
+    cd vps_surplus_value
+    ```
 
 3. 在 `script.js` 文件中替换您的 ExchangeRate-API 密钥：
-   ```javascript
-   const apiKey = 'YOUR_API_KEY_HERE';
-   ```
 
-4. 使用 PHP 内置服务器运行项目（或配置您喜欢的 Web 服务器）：
-   ```
-   php -S localhost:8000
-   ```
+    ```javascript
+    const apiKey = 'YOUR_API_KEY_HERE';
+    ```
 
-5. 在浏览器中访问 `http://localhost:8000` 来使用应用程序。
+4. 使用您喜欢的 Web 服务器运行项目。
+5. 在浏览器中访问相应的 URL 来使用应用程序。
 
 ## 使用说明
 
@@ -72,13 +70,9 @@
 ### RPL-1.5 的主要特点：
 
 1. **源代码可用性**：使用本软件的任何人都必须使其源代码可用。
-
 2. **改进共享**：对软件的任何改进或修改都必须在相同的许可证下共享。
-
 3. **商业使用**：允许商业使用，但有特定的条件。
-
 4. **专利授权**：包含明确的专利授权条款。
-
 5. **归属要求**：要求在使用或分发软件时提供适当的归属。
 
 ### 使用本项目时的注意事项：
@@ -89,22 +83,19 @@
 
 ### 重要提示
 
-在使用、修改或分发本软件之前，请仔细阅读完整的 RPL-1.5 许可证文本。您可以在项目根目录的 [LICENSE](LICENSE) 文件中找到完整的许可证文本。
+在使用、修改或分发本软件之前，请仔细阅读完整的 RPL-1.5 许可证文本。您可以在项目根目录的 [LICENSE](LICENSE.txt) 文件中找到完整的许可证文本。
 
 如果您对如何遵守这个许可证有任何疑问，建议咨询法律专业人士。
-
-
 
 ## 联系方式
 
 如果您有任何问题或建议，请通过以下方式联系我们：
 
-- 项目地址：[https://github.com/your-username/remaining-value-calculator](https://github.com/your-username/remaining-value-calculator)
-- 问题反馈：[https://github.com/your-username/remaining-value-calculator/issues](https://github.com/your-username/remaining-value-calculator/issues)
+- 项目地址：[https://github.com/Tomzhao1016/vps_surplus_value](https://github.com/Tomzhao1016/vps_surplus_value)
+- 问题反馈：[https://github.com/Tomzhao1016/vps_surplus_value/issues](https://github.com/Tomzhao1016/vps_surplus_value/issues)
 
 ## 致谢
 
 - [ExchangeRate-API](https://www.exchangerate-api.com/) - 提供实时汇率数据
 - [Flatpickr](https://flatpickr.js.org/) - 轻量级的日期选择器
 - [Font Awesome](https://fontawesome.com/) - 提供优秀的图标集
-

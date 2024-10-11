@@ -15,8 +15,8 @@ function initializeDatePickers() {
         dateFormat: "Y-m-d",
         locale: "zh",
         placeholder: "选择到期日期",
+        minDate: "today",
         onChange: function(selectedDates, dateStr) {
-            // 更新交易日期选择器的最大日期
             const transactionPicker = document.getElementById('transactionDate')._flatpickr;
             transactionPicker.set('maxDate', dateStr);
             validateDates();
@@ -27,37 +27,59 @@ function initializeDatePickers() {
         dateFormat: "Y-m-d",
         locale: "zh",
         placeholder: "选择交易日期",
+        minDate: "today",
         onChange: validateDates
     });
 }
 
 function validateDates() {
-    const expiryDate = new Date(document.getElementById('expiryDate').value);
-    const transactionDate = new Date(document.getElementById('transactionDate').value);
+    const expiryDateInput = document.getElementById('expiryDate').value;
+    const transactionDateInput = document.getElementById('transactionDate').value;
+    
+    if (!expiryDateInput || !transactionDateInput) return;
 
-    // 设置时间为 00:00:00 以确保只比较日期
+    const expiryDate = new Date(expiryDateInput);
+    const transactionDate = new Date(transactionDateInput);
+    const today = new Date();
+
+    // 设置所有时间为当天的开始（00:00:00）
     expiryDate.setHours(0, 0, 0, 0);
     transactionDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    if (transactionDate < today) {
+        showNotification('交易日期不能早于今天', 'error');
+        setDefaultTransactionDate();
+        return;
+    }
+
+    if (expiryDate <= today) {
+        showNotification('到期日期必须晚于今天', 'error');
+        document.getElementById('expiryDate').value = '';
+        return;
+    }
 
     if (transactionDate > expiryDate) {
         showNotification('交易日期不能晚于到期日期', 'error');
-        document.getElementById('transactionDate').value = '';
-    } else if (expiryDate.getTime() === transactionDate.getTime()) {
-        showNotification('交易日期不能是到期当天', 'error');
-        document.getElementById('transactionDate').value = '';
+        setDefaultTransactionDate();
+        return;
+    }
+
+    if (expiryDate.getTime() === transactionDate.getTime()) {
+        showNotification('交易日期不能等于到期日期', 'error');
+        setDefaultTransactionDate();
+        return;
     }
 
     updateRemainingDays();
 }
 
 function updateRemainingDays() {
-    const expiryDate = new Date(document.getElementById('expiryDate').value);
-    const transactionDate = new Date(document.getElementById('transactionDate').value);
+    const expiryDate = document.getElementById('expiryDate').value;
+    const transactionDate = document.getElementById('transactionDate').value;
 
-    if (expiryDate && transactionDate && transactionDate <= expiryDate) {
-        const timeDiff = expiryDate.getTime() - transactionDate.getTime();
-        const remainingDays = Math.max(Math.ceil(timeDiff / (1000 * 3600 * 24)), 0);
-
+    if (expiryDate && transactionDate) {
+        const remainingDays = calculateRemainingDays(expiryDate, transactionDate);
         document.getElementById('remainingDays').textContent = remainingDays;
         
         if (remainingDays === 0) {
@@ -88,12 +110,35 @@ function fetchExchangeRate() {
 }
 
 function setDefaultTransactionDate() {
-    const currentDate = new Date();
-    const eastEightTime = new Date(currentDate.getTime() + (8 * 60 * 60 * 1000));
-    const year = eastEightTime.getUTCFullYear();
-    const month = String(eastEightTime.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(eastEightTime.getUTCDate()).padStart(2, '0');
-    document.getElementById('transactionDate').value = `${year}-${month}-${day}`;
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const defaultDate = `${year}-${month}-${day}`;
+    document.getElementById('transactionDate').value = defaultDate;
+    if (document.getElementById('transactionDate')._flatpickr) {
+        document.getElementById('transactionDate')._flatpickr.setDate(defaultDate);
+    }
+}
+
+function calculateRemainingDays(expiryDate, transactionDate) {
+    const expiry = new Date(expiryDate);
+    const transaction = new Date(transactionDate);
+
+    // 设置所有时间为当天的开始（00:00:00）
+    expiry.setHours(0, 0, 0, 0);
+    transaction.setHours(0, 0, 0, 0);
+    
+    // 如果到期日早于或等于交易日期，返回0
+    if (expiry <= transaction) {
+        return 0;
+    }
+
+    // 计算天数差异
+    const timeDiff = expiry.getTime() - transaction.getTime();
+    const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+    return daysDiff;
 }
 
 function calculateAndSend() {
@@ -106,11 +151,24 @@ function calculateAndSend() {
 
     if (customRate && amount && cycle && expiryDate && transactionDate && !isNaN(bidAmount)) {
         const localAmount = (amount * customRate).toFixed(2);
-        const expiry = new Date(expiryDate);
-        const transaction = new Date(transactionDate);
+        const remainingDays = calculateRemainingDays(expiryDate, transactionDate);
         
-        const timeDiff = expiry.getTime() - transaction.getTime();
-        const remainingDays = Math.max(Math.ceil(timeDiff / (1000 * 3600 * 24)), 0);
+        // 计算年化价格
+        const annualPrice = localAmount * (12 / cycle);
+        
+        // 计算每天的价值
+        const dailyValue = annualPrice / 365;
+        
+        // 计算剩余价值
+        const remainingValue = (dailyValue * remainingDays).toFixed(2);
+        
+        // 计算溢价金额
+        const premiumValue = (bidAmount - parseFloat(remainingValue)).toFixed(2);
+
+        const result = {
+            remainingValue,
+            premiumValue
+        };
 
         const data = {
             price: localAmount,
@@ -123,22 +181,8 @@ function calculateAndSend() {
             bidAmount
         };
 
-        fetch('api/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(result => {
-            updateResults(result, data);
-            showNotification('计算完成！', 'success');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showNotification('计算过程中出现错误，请稍后再试。', 'error');
-        });
+        updateResults(result, data);
+        showNotification('计算完成！', 'success');
     } else {
         showNotification('请填写所有字段并确保输入有效', 'error');
     }

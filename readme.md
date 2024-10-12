@@ -19,7 +19,7 @@
 - **前端**：HTML5, CSS3, JavaScript (ES6+)
 - **样式**：自定义 CSS + Font Awesome 图标
 - **日期选择器**：Flatpickr
-- **汇率 API**：ExchangeRate-API
+- **汇率 API**：api.iloli.fun/exchange_rate
 
 ## 快速开始
 
@@ -35,14 +35,9 @@
     cd vps_surplus_value
     ```
 
-3. 在 `script.js` 文件中替换您的 ExchangeRate-API 密钥：
+3. 使用您喜欢的 Web 服务器运行项目。
 
-    ```javascript
-    const apiKey = 'YOUR_API_KEY_HERE';
-    ```
-
-4. 使用您喜欢的 Web 服务器运行项目。
-5. 在浏览器中访问相应的 URL 来使用应用程序。
+4. 在浏览器中访问相应的 URL 来使用应用程序。
 
 ## 使用说明
 
@@ -52,6 +47,16 @@
 4. 选择到期日期和交易日期
 5. 点击"计算剩余价值"按钮
 6. 查看计算结果，包括剩余价值和溢价金额
+
+## CORS 问题解决方案
+
+本项目使用 CORS 代理来解决跨域请求问题。在 `script.js` 文件中，我们使用了 CORS Anywhere 服务作为临时解决方案。请注意，这种方法并不适合生产环境。
+
+对于长期解决方案，请考虑以下选项：
+
+1. 联系 API 提供商 (api.iloli.fun)，请求他们为您的域名添加 CORS 支持。
+2. 设置自己的后端服务器，代表您的前端应用程序发出 API 请求。
+3. 使用无服务器函数（例如 AWS Lambda、Vercel Serverless Functions）创建您自己的代理。
 
 ## 贡献指南
 
@@ -96,6 +101,6 @@
 
 ## 致谢
 
-- [ExchangeRate-API](https://www.exchangerate-api.com/) - 提供实时汇率数据
+- [api.iloli.fun/exchange_rate](https://api.iloli.fun/exchange_rate) - 提供实时汇率数据
 - [Flatpickr](https://flatpickr.js.org/) - 轻量级的日期选择器
 - [Font Awesome](https://fontawesome.com/) - 提供优秀的图标集
